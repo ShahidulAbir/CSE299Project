@@ -17,22 +17,35 @@
     <body>
         <div class="container">
             <div class="option-container">
-                
-                <button class="btn"><i class="fa fa-home"></i> Home</button>
                 <button class="btn"><i class="fa fa-download"></i> Download</button>
-                <button class="btn"><i class="fa fa-upload" aria-hidden="true"></i> Add</button>
+                <input type="file" id="file" style="display:none;" />
+                <button class="btn" id="button" name="button" value="Upload" onclick="thisFileUpload();"><i class="fa fa-upload" aria-hidden="true"></i> Add File</button>
+                <button class="btn" id="folder"><i class="fa fa-folder" aria-hidden="true"></i> Add Folder</button>
+                <button class="btn" id="settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</button>
                 <button class="btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
             </div>
         </div>
 
+        {% block content %} {% endblock %}
+
         <script src={% static 'drive.js' %}></script>
         <script type="text/javascript">
+            document.getElementById("folder").onclick = function () {
+            location.href = "{% url 'add_folder' %}";
+            };
+            document.getElementById("settings").onclick = function () {
+            location.href = "{% url 'settings' %}";
+            };
             document.getElementById("logout").onclick = function () {
             location.href = "/accounts/logout";
-        };
-    </script>
+            };
+        </script>
+        <script>
+            function thisFileUpload() {
+                document.getElementById("file").click();
+            }
+        </script>
     
     </body>
     
 </html>
-    

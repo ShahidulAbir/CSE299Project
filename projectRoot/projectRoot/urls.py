@@ -23,7 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('profile/', user_views.show_profile, name='profile'),
+    path('settings/', user_views.profile, name='settings'),
     path('', user_views.homepage_redirect),
+    path('update/', user_views.homepage_redirect),
+    path('add_folder/', user_views.create_folder, name='add_folder'),
 ]
 
 if settings.DEBUG:

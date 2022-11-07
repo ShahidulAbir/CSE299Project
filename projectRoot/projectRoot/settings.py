@@ -150,6 +150,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/profile'
 
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_LOGOUT_ON_GET = True
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
