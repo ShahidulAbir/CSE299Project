@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href="{% static 'file.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+            <h2>Select a folder</h2>
+            {% for folder in folders %}
+                <li>
+                    <button class="btn" id="{{ folder.id }}" name="" type="button" value="Create"
+                            onclick="location.href='http://127.0.0.1:8000/folders/{{ user }}/{{ folder.id }}/{{ folder.name }}'">{{ folder.name }}</button>
+                </li>
+            {% endfor %}
+        </div>
+        <h8>PRIVATIZE</h8>
+    </div>
+    <div class="photo">
+        <img src="{% static 'img/undraw_add_files_re_v09g.svg' %}" style="max-width:100%;height:auto;" class="image"
+             alt="">
+    </div>
+</div>
+{#    <script>#}
+{#        document.getElementById("{{ file.name }}").onclick = function () {#}
+{#            location.href = "{% url 'upload_file' %}";#}
+{#        };#}
+{#    </script>#}
+</body>
+</html>

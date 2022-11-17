@@ -1,0 +1,62 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href="{% static 'update_profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+            {% block content %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="profile">
+                        <div class="field">
+                            <fieldset>
+                                <legend>Update Profile Info</legend>
+
+                                <div class="photo">
+                                    <img src="{% static 'img/undraw_photos_re_pvh3.svg' %}"
+                                         style="max-width:50%;height:10%;"
+                                         class="image" alt="">
+                                </div>
+                                {{ form|crispy }}
+                            </fieldset>
+                        </div>
+                        <div>
+                            <button class="btn" id="button" name="button" input type="submit" value="Create">Update
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+    <div>
+        <h8>PRIVATIZE</h8>
+    </div>
+
+    <div class="photo">
+        <img src="{% static 'img/undraw_functions_re_alho.svg' %}" style="max-width:100%;height:auto;" class="image"
+             alt="">
+    </div>
+
+</div>
+
+</body>
+
+</html>
+

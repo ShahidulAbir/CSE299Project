@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:ital,wght@0,400;1,500;1,600;1,700&family=Square+Peg&display=swap');
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; 
+} 
+.container{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgba(95, 212, 255, 0.893),#e9f848a8 ) ;
+    overflow: hidden;
+    
+  
+  }
+  
+ 
+  .container h8{
+    padding-top: 50px;
+    opacity: 0.3;
+  padding-left: 40% ;
+    position: sticky;
+    align-items: center;
+    font-size: 80px;
+
+  }
+  .container .photo{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+
+  }
+  .btn{
+
+    min-width:170px;
+    max-width: 350px;
+  height: 40px;
+  padding: 15px;
+
+  border: solid;
+  outline: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color:#ffffff;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: .5s;
+  margin:10px 0;
+  word-wrap: break-word;
+  block-size: fit-content;
+  
+  
+}
+.btn:hover{
+    background-color: #4d84e2;
+  }
+
+  

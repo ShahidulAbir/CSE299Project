@@ -1,0 +1,63 @@
+{% load static %}
+{% load account %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href="{% static 'drive_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+
+            <button class="btn" id="download"><i class="fa fa-download"></i> Download</button>
+            <button class="btn" id="file"><i class="fa fa-upload" aria-hidden="true"></i> Add File</button>
+            <button class="btn" id="folder"><i class="fa fa-folder" aria-hidden="true"></i> Add Folder</button>
+            <button class="btn" id="settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</button>
+            <button class="btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+        </div>
+        <h8>PRIVATIZE</h8>
+    </div>
+    <div class="photo">
+        <img src="{% static 'img/undraw_functions_re_alho.svg' %}" style="max-width:100%;height:auto;" class="image"
+             alt="">
+    </div>
+    {% block content %} {% endblock %}
+    <script src={% static 'drive.js' %}></script>
+    <script type="text/javascript">
+        document.getElementById("download").onclick = function () {
+            location.href = "{% url 'download_file' %}";
+        };
+
+        document.getElementById("file").onclick = function () {
+            location.href = "{% url 'upload_file' %}";
+        };
+
+        document.getElementById("folder").onclick = function () {
+            location.href = "{% url 'add_folder' %}";
+        };
+
+        document.getElementById("settings").onclick = function () {
+            location.href = "{% url 'settings' %}";
+        };
+
+        document.getElementById("logout").onclick = function () {
+            location.href = "/accounts/logout";
+        };
+    </script>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href="{% static 'upload_file.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+            <form action="{% url 'upload_file' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile">
+                    <div class="field">
+                        <fieldset>
+                            <legend>Upload File</legend>
+                            <div class="photo">
+                                <img src="{% static 'img/undraw_folder_files_re_2cbm.svg' %}"
+                                     style="max-width:50%;height:10%;"
+                                     class="image" alt="">
+                                {{ form|crispy }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div>
+                        <button class="btn" id="button" name="button" type="submit" value="Create">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <h8>PRIVATIZE</h8>
+    </div>
+
+    <div class="photo">
+        <img src="{% static 'img/undraw_functions_re_alho.svg' %}" style="max-width:100%;height:auto;" class="image"
+             alt="">
+    </div>
+
+</div>
+
+</body>
+
+</html>

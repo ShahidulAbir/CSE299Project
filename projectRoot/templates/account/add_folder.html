@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href={% static "add_folder.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="option-container">
+        <h2>Type your Folder Name</h2>
+        <div class="content">
+
+            <form action="{% url 'add_folder_redirect' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-field">
+                    <input id="folder_name" type="text" name="folder_name">
+                </div>
+                <button class="btn" id="button" name="button" type="submit" value="Create"
+                        onclick="location.href='{% url 'profile' %}'">Create
+                </button>
+            </form>
+
+        </div>
+        <h8>PRIVATIZE</h8>
+    </div>
+    <div class="photo">
+        <img src="{% static 'img/undraw_functions_re_alho.svg' %}" style="max-width:100%;height:auto;" class="image"
+             alt="">
+    </div>
+
+</div>
+
+</body>
+
+</html>
