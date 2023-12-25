@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:ital,wght@0,400;1,500;1,600;1,700&family=Square+Peg&display=swap');
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.container{
+    position: relative;
+     display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgba(95, 212, 255, 0.893),#e9f848a8 ) ;
+    overflow: hidden;
+
+
+  }
+
+
+
+ .noice{
+       margin: 0;
+          padding-left: 1450px;
+
+            display: flex;
+            justify-content: right;
+            align-items: start;
+     width: fit-content;
+     overflow: hidden;
+     position: fixed;
+    bottom: 680px;
+    right: 20px;
+
+
+    height: 245px;
+
+
+
+ }
+ .container .content{
+     width:fit-content ;
+ }
+@media only screen and (max-width:800px) {
+
+  .main {
+    width: 80%;
+    padding: 0;
+  }
+  .right {
+    width: 100%;
+  }
+}
+@media only screen and (max-width:500px) {
+
+  .menu, .main, .right {
+    width: 100%;
+  }
+}
+
+
+
+
+

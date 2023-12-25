@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <link rel="stylesheet" href="{% static 'preview.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+            <h1>Test</h1>
+            <div class="row">
+                <embed
+                        src="../../media/downloads/cse323_draft.pdf"
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling="auto"
+                        width="195"
+                        height="850"
+                ></embed>
+{#                <a href="file://C:/Shahidul/Softwares/CSE299Project/projectRoot/media/downloads/{{ file_name }}">Show</a>#}
+            </div>
+
+        </div>
+        {% comment %}<h8>PRIVATIZE</h8>{% endcomment %}
+    </div>
+
+
+</div>
+</body>
+
+</html>

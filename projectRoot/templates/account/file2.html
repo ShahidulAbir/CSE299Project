@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="http://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <title>Privatize</title>
+    <script src="{% static 'face-api.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
+    <link rel="stylesheet" href="{% static 'file2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+           body{
+                display: flex;
+            justify-content: right;
+
+           }
+        canvas {
+            position: fixed;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="option-container">
+        <div class="content">
+          <embed id="embed" src="{% static 'downloads/'|add:file_name %}#toolbar=0" height="960" width="1920" hidden>
+    <div class="noice">
+    <video id="video" width="480" height="292.50" autoplay muted></video>
+
+
+    {% comment %}<embed src="https://docs.google.com/viewer?url={{ request.FILE.path }}&embedded=true" height="200" width="300">{% endcomment %}
+
+    <script>
+        const video = document.getElementById('video')
+
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceLandmark68Net.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceExpressionNet.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.ssdMobilenetv1.loadFromUri('{% static '/models' %}')
+        ]).then(startVideo)
+
+        function startVideo() {
+            navigator.mediaDevices.getUserMedia({
+                video: true
+            }).then(
+                stream => (video.srcObject = stream),
+                err => console.log(err)
+            );
+            console.log("Started")
+            start()
+        }
+
+        let canvas
+        async function start() {
+            console.log("Hello")
+            const labeledFaceDescriptors = await loadLabeledImages()
+            const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+            console.log("Test")
+            video.addEventListener('playing', async () => {
+                console.log("Playing")
+                if (canvas) canvas.remove()
+                canvas = faceapi.createCanvasFromMedia(video)
+                document.body.append(canvas)
+                const displaySize = {width: video.width, height: video.height}
+                faceapi.matchDimensions(canvas, displaySize)
+                setInterval(async () => {
+                    const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors()
+                    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+                    const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+                    results.forEach((result, i) => {
+                        const box = resizedDetections[i].detection.box
+                        {% comment %}canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height){% endcomment %}
+                        const drawBox = new faceapi.draw.DrawBox(box, {label: result.toString()})
+                        drawBox.draw(canvas)
+                        console.log(result.toString())
+                    })
+                    if (detections.length !== 1 || results[0]['label'] !== "{{ request.user.username }}") {
+                        document.getElementById("embed").hidden = true;
+                    }
+                    else {
+                        document.getElementById("embed").hidden = false;
+                    }
+                    console.log("OK")
+                    {% comment %}faceapi.draw.drawDetections(canvas, resizedDetections)
+                    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+                    faceapi.draw.drawFaceExpressions(canvas, resizedDetections){% endcomment %}
+                }, 100)
+            })
+        }
+
+        function loadLabeledImages() {
+            const labels = ['{{ request.user.username }}']
+            return Promise.all(
+                labels.map(async label => {
+                    const descriptions = []
+                    const img = await faceapi.fetchImage(`{{ request.user.profile.auth_image.url }}`)
+                    const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+                    descriptions.push(detections.descriptor)
+                    console.log("Labeled")
+                    return new faceapi.LabeledFaceDescriptors(label, descriptions)
+                })
+            )
+        }
+    </script>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{#    <script>#}
+{#        document.getElementById("{{ file.name }}").onclick = function () {#}
+{#            location.href = "{% url 'upload_file' %}";#}
+{#        };#}
+{#    </script>#}
+</body>
+</html>

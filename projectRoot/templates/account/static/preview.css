@@ -1,0 +1,28 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:ital,wght@0,400;1,500;1,600;1,700&family=Square+Peg&display=swap');
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; 
+} 
+body { 
+    background: linear-gradient(rgba(95, 212, 255, 0.893),#e9f848a8 ) ;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+   
+}
+  .container h8{
+    padding-top: 50px;
+    opacity: 0.4;
+  padding-left: 40% ;
+    position: sticky;
+    align-items: center;
+    font-size: 80px;
+   
+  }
+ 
+ 

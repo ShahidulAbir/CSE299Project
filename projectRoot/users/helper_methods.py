@@ -127,7 +127,7 @@ def upload_file_helper(request):
         print(F'An error occurred: {error}')
         file = None
 
-    return file.get('id')
+    return
 
 
 def list_file_helper(request):

@@ -1,0 +1,35 @@
+*{
+
+margin: 0;
+  box-sizing: border-box;
+}
+.container{
+  overflow: hidden
+
+}
+h8{
+    padding-top: 400px;
+    opacity: 0.3;
+  padding-right: 15%;
+    position: sticky;
+    align-items: center;
+    font-size: 80px;
+
+  }
+@media only screen and (max-width:800px) {
+
+  .main {
+    width: 80%;
+    padding: 0;
+  }
+  .right {
+    width: 100%;
+  }
+}
+@media only screen and (max-width:500px) {
+
+  .menu, .main, .right {
+    width: 100%;
+  }
+}
+

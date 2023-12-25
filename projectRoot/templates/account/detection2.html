@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{% static 'face-api.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% comment %}<script defer src="{% static 'script.js' %}"></script>{% endcomment %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: right;
+            align-items: start;
+            background: linear-gradient(rgba(95, 212, 255, 0.893),#e9f848a8 ) ;
+
+        }
+
+
+        canvas {
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+<h8>PRIVATIZE</h8>
+
+<div class="container">
+
+    <video id="video" width="480" height="292.50" autoplay muted></video>
+    <script>
+        const video = document.getElementById('video')
+
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceLandmark68Net.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.faceExpressionNet.loadFromUri("{% static '/models' %}"),
+            faceapi.nets.ssdMobilenetv1.loadFromUri('{% static '/models' %}')
+        ]).then(startVideo)
+
+        function startVideo() {
+            navigator.mediaDevices.getUserMedia({
+                video: true
+            }).then(
+                stream => (video.srcObject = stream),
+                err => console.log(err)
+            );
+            console.log("Started")
+            start()
+        }
+
+        async function start() {
+            const labeledFaceDescriptors = await loadLabeledImages()
+            const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+            video.addEventListener('change', () => {
+                console.log("Playing")
+                const canvas = faceapi.createCanvasFromMedia(video)
+                document.body.append(canvas)
+                const displaySize = {width: video.width, height: video.height}
+                faceapi.matchDimensions(canvas, displaySize)
+                setInterval(async () => {
+                    const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors()
+                    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+                    {% comment %}canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height){% endcomment %}
+                    const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+                    results.forEach((result, i) => {
+                        const box = resizedDetections[i].detection.box
+                        const drawBox = new faceapi.draw.DrawBox(box, {label: result.toString()})
+                        drawBox.draw(canvas)
+                        console.log(result.toString())
+                    })
+                    console.log("OK")
+                    {% comment %}faceapi.draw.drawDetections(canvas, resizedDetections)
+                    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+                    faceapi.draw.drawFaceExpressions(canvas, resizedDetections){% endcomment %}
+                }, 100)
+            })
+        }
+
+        function loadLabeledImages() {
+            const labels = ['{{ request.user.username }}']
+            return Promise.all(
+                labels.map(async label => {
+                    const descriptions = []
+                    const img = await faceapi.fetchImage(`{{ request.user.profile.auth_image.url }}`)
+                    const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+                    descriptions.push(detections.descriptor)
+                    console.log("Labeled")
+                    return new faceapi.LabeledFaceDescriptors(label, descriptions)
+                })
+            )
+        }
+    </script>
+
+</div>
+</body>
+</html>

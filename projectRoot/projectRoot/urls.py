@@ -36,7 +36,11 @@ urlpatterns = [
     # path('folders/<user>/<folder_id>/<folder_name>/', user_views.upload_file, name='upload'),
 
     path('files/', user_views.list_files, name='download_file'),
-    path('files/<user>/<file_id>/<file_name>/', user_views.download_file, name='download_from_id')
+    path('files/<user>/<file_id>/<file_name>/', user_views.download_file, name='download_from_id'),
+    path('preview/<file_name>', user_views.preview, name='preview'),
+    path('detection/', user_views.detection, name='detection'),
+
+    # path('file2/', user_views.list_files, name='file2'),
 ]
 
 if settings.DEBUG:
